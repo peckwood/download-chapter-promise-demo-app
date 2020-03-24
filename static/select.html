@@ -16,29 +16,24 @@
   <body>
     <header>
       <h1>
-        A Dream of the Future
+        Select files with <code>&lt;input type="file"&gt;</code>
       </h1>
     </header>
     <main>
       <input type="file" id="files" name="files[]" multiple/>
     </main>
     <script>
-      function handleFileSelect(event) {
-        const files = event.target.files;
-        files.forEach(file => {
-          // f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-          console.log({name: file.name, type: file.type, size: file.size});
-        });
-        // name, type, size, lastModified
-        for (var i = 0, f; f = files[i]; i++) {
-          output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                      f.size, ' bytes, last modified: ',
-                      f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                      '</li>');
-        }
-        document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+      if (window.File && window.FileList) {
+        document.getElementById('files').addEventListener('change', event => {
+          const files = event.target.files;
+          for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            console.log({name: file.name, type: file.type, size: file.size});
+          }
+        }); 
+      } else {
+        
       }
-      document.getElementById('files').addEventListener('change', handleFileSelect, false);
     </script>
   </body>
 </html>
