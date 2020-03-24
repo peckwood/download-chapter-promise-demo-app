@@ -30,9 +30,9 @@
           for (let i = 0; i < files.length; i++) {
             const file = files[i];
             console.log({
-              name: file.name, 
-              type: file.type, 
-              size: file.size
+              name: file.name ? file.name : 'Unsupported', 
+              type: file.type ? file.type : 'Unsupported', 
+              size: file.size ? file.size : 'Unsupported'
             });
           }
         }); 
