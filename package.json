@@ -1,7 +1,7 @@
 {
-  "name": "TODO",
+  "name": "input-type-file",
   "version": "0.0.1",
-  "description": "TODO",
+  "description": "How to select files with HTML and JavaScript.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -13,7 +13,7 @@
     "node": "12.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/TODO"
+    "url": "https://glitch.com/edit/#!/input-type-file"
   },
   "license": "Apache-2.0"
 }
