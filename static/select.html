@@ -16,6 +16,7 @@
   <body>
     <h1>
       Select files with <code>&lt;input type="file"&gt;</code>
+      and then read them with <code>FileList</code> and <code>File</code>
     </h1>
     <input type="file" id="input" name="files[]" multiple/>
     <ul id="output"></ul>
@@ -28,9 +29,9 @@
           for (let i = 0; i < files.length; i++) {
             const li = document.createElement('li');
             const file = files[i];
-            const name = file.name ? file.name : undefined;
-            const type = file.type ? file.type : undefined;
-            const size = file.size ? file.size : undefined;
+            const name = file.name ? file.name : 'NOT SUPPORTED';
+            const type = file.type ? file.type : 'NOT SUPPORTED';
+            const size = file.size ? file.size : 'NOT SUPPORTED';
             li.textContent = `name: ${name}, type: ${type}, size: ${size}`;
             output.appendChild(li);
           }
