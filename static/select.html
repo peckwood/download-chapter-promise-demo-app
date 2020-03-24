@@ -19,26 +19,21 @@
         Select files with <code>&lt;input type="file"&gt;</code>
       </h1>
     </header>
-    <main>
-      <input type="file" id="input" name="files[]" multiple/>
-      <ul id="output"></ul>
-    </main>
-    <script>
-      if (window.File && window.FileList) {
-        document.getElementById('input').addEventListener('change', event => {
-          const files = event.target.files;
-          for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            console.log({
-              name: file.name ? file.name : 'Unsupported', 
-              type: file.type ? file.type : 'Unsupported', 
-              size: file.size ? file.size : 'Unsupported'
-            });
-          }
-        }); 
-      } else {
-        document.getElementById('input').disabled = true;
+<input type="file" id="input" name="files[]" multiple/>
+<script>
+  if (window.File && window.FileList) {
+    document.getElementById('input').addEventListener('change', event => {
+      const files = event.target.files;
+      for (let i = 0; i < files.length; i++) {
+        const li = document.createElement('li');
+        const file = files[i];
+        console.log({
+          name: file.name ? file.name : undefined, 
+          type: file.type ? file.type : undefined,
+        });
       }
-    </script>
+    }); 
+  }
+</script>
   </body>
 </html>
