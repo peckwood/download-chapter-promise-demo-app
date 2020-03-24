@@ -20,19 +20,24 @@
       </h1>
     </header>
     <main>
-      <input type="file" id="files" name="files[]" multiple/>
+      <input type="file" id="input" name="files[]" multiple/>
+      <ul id="output"></ul>
     </main>
     <script>
       if (window.File && window.FileList) {
-        document.getElementById('files').addEventListener('change', event => {
+        document.getElementById('input').addEventListener('change', event => {
           const files = event.target.files;
           for (let i = 0; i < files.length; i++) {
             const file = files[i];
-            console.log({name: file.name, type: file.type, size: file.size});
+            console.log({
+              name: file.name, 
+              type: file.type, 
+              size: file.size
+            });
           }
         }); 
       } else {
-        
+        document.getElementById('input').disabled = true;
       }
     </script>
   </body>
