@@ -1,6 +1,6 @@
 # read-image-file
 
-This example is part of the [Read files in JavaScript](https://web.dev/read-files/) guide on [web.dev](https://web.dev).
+This example is part of the [Promises](https://web.dev/promises/) guide on [web.dev](https://web.dev).
 
 ## License
 
