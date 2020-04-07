@@ -1,7 +1,7 @@
 {
   "name": "promises-sync-example",
   "version": "0.0.1",
-  "description": "Fetching JSON synchronously.",
+  "description": "Fetching JSON asynchronously.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -13,7 +13,7 @@
     "node": "12.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/promises-sync-example"
+    "url": "https://glitch.com/edit/#!/promises-async-example"
   },
   "license": "Apache-2.0"
 }
