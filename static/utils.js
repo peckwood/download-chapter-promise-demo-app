@@ -79,8 +79,24 @@ function get(url) {
   });
 }
 
+// function getJson(url) {
+//   return get(url).then(JSON.parse);
+// }
+
 function getJson(url) {
-  return get(url).then(JSON.parse);
+  return new Promise((resolve, reject) => {
+    if (url === 'chapter-3.json') {
+      setTimeout(async () => {
+        resolve(get(url).then(JSON.parse));
+      }, 3000)
+    } else if (url === 'chapter-2.json') {
+      setTimeout(() => {
+        resolve(get(url).then(JSON.parse));
+      }, 2000);
+    } else {
+      resolve(get(url).then(JSON.parse));
+    }
+  });
 }
 
 function getSync(url) {

@@ -3,44 +3,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Promises test</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="shortcut icon" 
-        href="https://cdn.glitch.com/9b775a52-d700-4208-84e9-18578ee75266%2Ficon.jpeg?v=1585082912878">
+    <title>Promises test</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon"
+          href="https://cdn.glitch.com/9b775a52-d700-4208-84e9-18578ee75266%2Ficon.jpeg?v=1585082912878">
 </head>
 <body>
-  <div class="network-fake">
+<div class="network-fake">
     <label><input type="checkbox"> Fake network delay</label>
-  </div>
-  <div class="story"></div>
-  <svg class="spinner" viewBox="0 0 100 100" width="20" height="20">
-    <circle cx="50" cy="50" r="42" transform="rotate(-90,50,50)" />
-  </svg>
-  <script src="utils.js"></script>
-  <script>
-    getJson('story.json').then(function(story) {
-      addHtmlToPage(story.heading);
+</div>
+<div class="story"></div>
+<svg class="spinner" viewBox="0 0 100 100" width="20" height="20">
+    <circle cx="50" cy="50" r="42" transform="rotate(-90,50,50)"/>
+</svg>
+<script src="utils.js"></script>
+<script>
 
-      return story.chapterUrls.reduce(function(chain, chapterUrl) {
-        // Once the last chapter's promise is done…
-        return chain.then(function() {
-          // …fetch the next chapter
-          return getJson(chapterUrl);
-        }).then(function(chapter) {
-          // and add it to the page
-          addHtmlToPage(chapter.html);
+    //download all chapters simultaneously
+    //display in wrong order
+    function method1() {
+        getJson('story.json').then(function (story) {
+            story.chapterUrls.forEach(function (chapterUrl) {
+                let promise = Promise.resolve();
+                // Fetch chapter
+                promise = promise.then(getJson(chapterUrl).then(function (chapter) {
+                    // and add it to the page
+                    addHtmlToPage(chapter.html);
+                }));
+                return promise;
+            })
+        }).then(() => document.querySelector('.spinner').style.display = 'none');
+    }
+
+    //download one by one
+    //display in correct order
+    function method2(){
+        getJson('story.json').then(function (story) {
+            story.chapterUrls.reduce((chain, chapterUrl) => {
+                chain = chain.then(() => getJson(chapterUrl))
+                    .then((chapterContent) => addHtmlToPage(chapterContent.html));
+                return chain;
+            }, Promise.resolve())
+                .then(() => document.querySelector('.spinner').style.display = 'none');
         });
-      }, Promise.resolve());
-    }).then(function() {
-      // And we're all done!
-      addTextToPage("All done");
-    }).catch(function(err) {
-      // Catch any error that happened along the way
-      addTextToPage("Argh, broken: " + err.message);
-    }).then(function() {
-      // Always hide the spinner
-      document.querySelector('.spinner').style.display = 'none';
-    });
-  </script>
+    }
+
+    //download all chapters simultaneously
+    //display in correct order
+    function method3() {
+        getJson('story.json').then(function (story) {
+            let promises = [];
+            story.chapterUrls.forEach((chapterUrl => {
+                promises.push(getJson(chapterUrl));
+            }))
+            Promise.all(promises).then(chapterContentArray => {
+                chapterContentArray.reduce((chain, chapterContent) => {
+                    chain = chain.then(() => addHtmlToPage(chapterContent.html));
+                    return chain;
+                }, Promise.resolve())
+            }).catch(err => alert(err))
+                .then(() => document.querySelector('.spinner').style.display = 'none');
+
+        });
+    }
+
+    method3();
+
+</script>
 </body>
 </html>
